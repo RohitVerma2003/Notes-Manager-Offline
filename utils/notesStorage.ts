@@ -6,6 +6,7 @@ export type Note = {
   title: string;
   body: string;
   image?: string;
+  color?: string;
   updatedAt: number;
 };
 

@@ -8,8 +8,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
-  View,
+  TouchableOpacity
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -17,9 +16,9 @@ export default function SignUpScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = async () => {
+  const handleSignup = async () => {
     if (!username || !password) {
-      Alert.alert("Error", "All fields are required");
+      Alert.alert("Error", "Please enter username & password.");
       return;
     }
 
@@ -34,45 +33,40 @@ export default function SignUpScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Create Account</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Create Account</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Choose a username"
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-        />
+      <TextInput
+        placeholder="Username"
+        style={styles.input}
+        autoCapitalize="none"
+        onChangeText={setUsername}
+      />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password / PIN"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
+      <TextInput
+        placeholder="Password"
+        style={styles.input}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
 
-        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-          <Text style={styles.buttonText}>Sign Up</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.btn} onPress={handleSignup}>
+        <Text style={styles.btnText}>Sign Up</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.push("/login")}>
-          <Text style={styles.link}>Already have an account? Login</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity onPress={() => router.push("/login")}>
+        <Text style={styles.link}>Already have an account? Login</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 24 },
+  container: {
+    flex: 1,
+    padding: 24,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   title: {
     fontSize: 28,
     fontWeight: "700",
@@ -81,17 +75,19 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 16,
+    borderColor: "#ddd",
+    padding: 14,
+    fontSize: 16,
+    borderRadius: 10,
+    marginBottom: 14,
   },
-  button: {
+  btn: {
     backgroundColor: "#111827",
     padding: 14,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: "center",
+    marginVertical: 10,
   },
-  buttonText: { color: "white", fontSize: 16, fontWeight: "600" },
-  link: { marginTop: 16, textAlign: "center", color: "#2563eb" },
+  btnText: { color: "white", fontSize: 18, fontWeight: "600" },
+  link: { textAlign: "center", color: "#2563eb", marginTop: 10 },
 });

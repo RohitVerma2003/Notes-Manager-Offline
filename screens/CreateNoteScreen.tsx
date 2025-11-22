@@ -3,6 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { useState } from "react";
 import {
+  Alert,
   Image,
   Platform,
   StatusBar,
@@ -10,32 +11,54 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import uuid from "react-native-uuid";
 
+const placeholderColors = ["#fde68a", "#fecaca", "#bfdbfe", "#bbf7d0", "#ddd"];
+const randomColor =
+  placeholderColors[Math.floor(Math.random() * placeholderColors.length)];
+
 export default function CreateNoteScreen() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState<string | undefined>(undefined);
+  const [image, setImage] = useState<string | undefined>();
 
   const pickImage = async () => {
-    const res = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       base64: true,
       quality: 0.5,
     });
-    if (!res.canceled) {
-      setImage(`data:image/jpeg;base64,${res.assets[0].base64}`);
+    if (!result.canceled) {
+      setImage(`data:image/jpeg;base64,${result.assets[0].base64}`);
     }
   };
 
-  const save = async () => {
+  const takePhoto = async () => {
+    const result = await ImagePicker.launchCameraAsync({
+      base64: true,
+      quality: 0.5,
+    });
+    if (!result.canceled) {
+      setImage(`data:image/jpeg;base64,${result.assets[0].base64}`);
+    }
+  };
+
+  const saveNote = async () => {
+    if (title.trim() === "" && body.trim() === "" && !image) {
+      Alert.alert("Error", "Please add at least a title, body, or an image.");
+      return;
+    }
+
+    const id = uuid.v4().toString();
+    const finalTitle = title.trim() === "" ? `Untitled-${id}` : title;
+
     const note: Note = {
-      id: uuid.v4().toString(),
-      title,
+      id,
+      title: finalTitle,
       body,
       image,
+      color: randomColor,
       updatedAt: Date.now(),
     };
 
@@ -44,67 +67,77 @@ export default function CreateNoteScreen() {
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-      }}
-    >
-      <View style={styles.container}>
-        <TextInput
-          placeholder="Note title..."
-          style={styles.titleInput}
-          value={title}
-          onChangeText={setTitle}
-        />
+    <SafeAreaView style={styles.container}>
+      <TextInput
+        placeholder="Title"
+        value={title}
+        onChangeText={setTitle}
+        style={styles.titleInput}
+      />
 
-        {image && <Image source={{ uri: image }} style={styles.image} />}
+      {image && <Image source={{ uri: image }} style={styles.img} />}
 
-        <TouchableOpacity onPress={pickImage} style={styles.imageButton}>
-          <Text style={styles.imageButtonText}>Add Image</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+        <Text>Select From Gallery</Text>
+      </TouchableOpacity>
 
-        <TextInput
-          placeholder="Write here..."
-          style={styles.bodyInput}
-          value={body}
-          onChangeText={setBody}
-          multiline
-        />
+      <TouchableOpacity style={styles.imageButton} onPress={takePhoto}>
+        <Text>Capture From Camera</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity onPress={save} style={styles.saveButton}>
-          <Text style={styles.saveText}>Save Note</Text>
-        </TouchableOpacity>
-      </View>
+      <TextInput
+        placeholder="Write your note..."
+        value={body}
+        onChangeText={setBody}
+        style={styles.body}
+        multiline
+      />
+
+      <TouchableOpacity style={styles.saveBtn} onPress={saveNote}>
+        <Text style={styles.saveText}>Save Note</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
+  container: {
+    flex: 1,
+    padding: 20,
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   titleInput: {
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: "700",
     marginBottom: 20,
   },
-  bodyInput: {
+  body: {
     flex: 1,
-    textAlignVertical: "top",
     fontSize: 16,
+    textAlignVertical: "top",
   },
-  image: { width: "100%", height: 200, borderRadius: 10, marginBottom: 20 },
-  imageButton: {
-    backgroundColor: "#ddd",
-    padding: 10,
-    borderRadius: 8,
+  img: {
+    width: "100%",
+    height: 200,
+    borderRadius: 10,
     marginBottom: 20,
+  },
+  imageButton: {
+    backgroundColor: "#e5e7eb",
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 12,
     alignItems: "center",
   },
-  imageButtonText: { fontWeight: "600" },
-  saveButton: {
+  saveBtn: {
     backgroundColor: "#111827",
     padding: 14,
     borderRadius: 10,
   },
-  saveText: { color: "white", textAlign: "center", fontWeight: "700" },
+  saveText: {
+    color: "white",
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: 16,
+  },
 });
