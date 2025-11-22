@@ -40,6 +40,21 @@ Supports multiple users, login/signup, per-user notes, camera/gallery images, se
 
 ---
 
+# Images
+
+<p width="100%">
+   <img width="33%" src="https://github.com/user-attachments/assets/d8231b4d-7802-444d-8570-4e995d9cf5b8"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/b67be7bb-8467-4050-9d63-3ffae39f3a49"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/fbfdc1b6-229c-46cb-b701-542ba41a169e"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/6f1ae489-9c82-411f-af6a-91a5ae81975d"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/35db7ddd-1aa7-4477-8719-3237fe1b8dc9"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/fa3897ee-d93c-4c73-86c1-746f3a605428"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/2433294e-493c-4997-8c36-104fb18064da"/>
+   <img width="33%" src="https://github.com/user-attachments/assets/b942c6b8-f43d-4546-ad8b-41ef35e546dd"/>
+</p>
+
+---
+
 ## 📂 Project Structure
 
 ```markdown
