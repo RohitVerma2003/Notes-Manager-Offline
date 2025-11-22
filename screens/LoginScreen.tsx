@@ -1,7 +1,8 @@
 import { loginUser } from "@/utils/authStorage";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Platform, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
@@ -20,10 +21,16 @@ export default function LoginScreen() {
       return;
     }
 
-    router.replace("/home"); // success
+    router.replace("/home");
   };
 
   return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+      }}
+    >
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
@@ -51,6 +58,7 @@ export default function LoginScreen() {
         <Text style={styles.link}>Create an account</Text>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 }
 
