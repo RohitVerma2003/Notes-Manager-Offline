@@ -1,50 +1,129 @@
-# Welcome to your Expo app 👋
+# 📱 Offline Notes App – React Native (Expo Router)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A fully offline-capable notes application built with React Native, Expo Router, and AsyncStorage.
+Supports multiple users, login/signup, per-user notes, camera/gallery images, search & sort, and full CRUD.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
 
-   ```bash
-   npm install
-   ```
+### 🔐 Authentication (Offline Only)
+- Local user accounts stored in AsyncStorage
+- Unique username + password
+- Multiple users on the same device
+- Auto-login & logout
 
-2. Start the app
+### 📝 Notes (Per User)
+- Create, edit, update, delete
+- Saved locally (no internet needed)
+- Supports:
+   - Title
+   - Body text
+   - Optional image (Camera / Gallery)
+   - Persistent Base64 storage
+   - table placeholder color when image is missing
 
-   ```bash
-   npx expo start
-   ```
+### 🔎 Search & Sort
+- Search by title or body
+- Sorting modes:
+  - Last Updated (Newest → Oldest)
+  - Last Updated (Oldest → Newest)
+  - Title (A → Z)
+  - Title (Z → A)
+- Search + sort work together
 
-In the output, you'll find options to open the app in a
+### 📷 Image Support
+- Pick from gallery
+- Capture using camera
+- Image stored permanently in base64
+- Works offline
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📂 Project Structure
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```markdown
+notes-offline/
+│
+├── app/
+│   ├── _layout.tsx
+│   ├── login.tsx
+│   ├── signup.tsx
+│   ├── home.tsx
+│   └── notes/
+│        ├── new.tsx
+│        └── [id].tsx
+│
+├── screens/
+│   ├── LoginScreen.tsx
+│   ├── SignUpScreen.tsx
+│   ├── HomeScreen.tsx
+│   ├── CreateNoteScreen.tsx
+│   └── EditNoteScreen.tsx
+│
+└── utils/
+    ├── authStorage.ts
+    └── notesStorage.ts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🛠 Setup Instructions
 
-## Learn more
+1. Clone the Repository
+```markdown
+git clone https://github.com/RohitVerma2003/Notes-Manager-Offline
+cd Notes-Manager-Offline
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+2. Install Dependencies
+```markdown
+npm install
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+3. Install Expo Dependencies
+```markdown
+npx expo install react-native-safe-area-context
+npx expo install @react-native-async-storage/async-storage
+npx expo install expo-image-picker
+npx expo install expo-router
+npx expo install expo-status-bar
+```
 
-## Join the community
+4. Install Additional Libraries
+```markdown
+npm install @react-native-picker/picker
+npm install react-native-uuid
+```
 
-Join our community of developers creating universal apps.
+5. Start the Project
+```markdown
+npx expo start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+### 📚 Libraries Used
+
+| Library                                       | Purpose                       |
+| --------------------------------------------- | ----------------------------- |
+| **expo-router**                               | File-based navigation         |
+| **@react-native-async-storage/async-storage** | Local storage (users & notes) |
+| **expo-image-picker**                         | Select or capture images      |
+| **react-native-safe-area-context**            | Handle notches / safe areas   |
+| **@react-native-picker/picker**               | Sorting dropdown              |
+| **react-native-uuid**                         | Generate note IDs             |
+| **expo-status-bar**                           | Status bar handling           |
+| **React Native Core API**                     | UI, styling, components       |
+
+
+---
+
+## 🎯 Possible Future Enhancements
+
+- ✔ Grid view for notes
+- ✔ Categories & tags
+- ✔ Note reminders
+- ✔ Export note as PDF
+- ✔ Share note across apps
+- ✔ Pin/fingerprint lock per user
+- ✔ Dark mode
+- ✔ Voice notes
